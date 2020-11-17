@@ -19,5 +19,8 @@ exports.typeDefs = `
         favorites: [Recipe]
     }
 
+type Query {
+    getAllRecipes: [Recipe]
+}
 
 `;
