@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+
+import { Query } from "react-apollo";
+
+import { GETL_ALL_RECIPES } from "./queries";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Home</h1>
+      <Query query={GETL_ALL_RECIPES}>
+        {({ data, loading, error }) => {
+          if (loading) return <div>Loading</div>;
+          if (error) return <div> Error</div>;
+          console.log(data);
+          return <p>Recipes</p>;
+        }}
+      </Query>
     </div>
   );
 }
