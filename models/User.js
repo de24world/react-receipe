@@ -6,27 +6,27 @@ const UserSchema = new Schema({
   username: {
     type: String,
     required: true,
-    unique: true,
+    unique: true
   },
   password: {
     type: String,
-    required: true,
+    required: true
   },
   email: {
     type: String,
-    required: true,
+    required: true
   },
-  joinData: {
+  joinDate: {
     type: Date,
-    default: Date.now,
+    default: Date.now
   },
   favorites: {
     type: [Schema.Types.ObjectId],
-    ref: "Recipe",
-  },
+    ref: "Recipe"
+  }
 });
 
-UserSchema.pre("save", function (next) {
+UserSchema.pre("save", function(next) {
   if (!this.isModified("password")) {
     return next();
   }

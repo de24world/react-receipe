@@ -10,9 +10,8 @@ exports.resolvers = {
     getAllRecipes: async (root, args, { Recipe }) => {
       const allRecipes = await Recipe.find();
       return allRecipes;
-    },
+    }
   },
-
   Mutation: {
     addRecipe: async (
       root,
@@ -24,7 +23,7 @@ exports.resolvers = {
         description,
         category,
         instructions,
-        username,
+        username
       }).save();
       return newRecipe;
     },
@@ -37,9 +36,9 @@ exports.resolvers = {
       const newUser = await new User({
         username,
         email,
-        password,
+        password
       }).save();
       return { token: createToken(newUser, process.env.SECRET, "1hr") };
-    },
-  },
+    }
+  }
 };

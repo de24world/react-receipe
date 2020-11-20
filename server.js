@@ -1,17 +1,12 @@
 const express = require("express");
-
 const mongoose = require("mongoose");
-
 const bodyParser = require("body-parser");
-
 const cors = require("cors");
-
 require("dotenv").config({ path: "variables.env" });
-
 const Recipe = require("./models/Recipe");
 const User = require("./models/User");
 
-// Bring in GraqphQL-Express middleware
+// Bring in GraphQL-Express middleware
 const { graphiqlExpress, graphqlExpress } = require("apollo-server-express");
 const { makeExecutableSchema } = require("graphql-tools");
 
@@ -21,21 +16,21 @@ const { resolvers } = require("./resolvers");
 // Create schema
 const schema = makeExecutableSchema({
   typeDefs,
-  resolvers,
+  resolvers
 });
 
 // Connects to database
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("DB connected"))
-  .catch((err) => console.error(err));
+  .catch(err => console.error(err));
 
-//   Initializes application
+// Initializes application
 const app = express();
 
 const corsOptions = {
   origin: "http://localhost:3000",
-  credentials: true,
+  credentials: true
 };
 app.use(cors(corsOptions));
 
@@ -50,13 +45,13 @@ app.use(
     schema,
     context: {
       Recipe,
-      User,
-    },
+      User
+    }
   })
 );
 
 const PORT = process.env.PORT || 4444;
 
 app.listen(PORT, () => {
-  console.log(`Server Listening on PORT ${PORT}`);
+  console.log(`Server listening on PORT ${PORT}`);
 });
