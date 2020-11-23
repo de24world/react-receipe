@@ -16,23 +16,30 @@ const { resolvers } = require("./resolvers");
 // Create schema
 const schema = makeExecutableSchema({
   typeDefs,
-  resolvers
+  resolvers,
 });
 
 // Connects to database
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("DB connected"))
-  .catch(err => console.error(err));
+  .catch((err) => console.error(err));
 
 // Initializes application
 const app = express();
 
 const corsOptions = {
   origin: "http://localhost:3000",
-  credentials: true
+  credentials: true,
 };
 app.use(cors(corsOptions));
+
+// Set up JWT authentication middleware
+app.use(async (req, res, next) => {
+  const token = req.headers["authorization"];
+  console.log(token);
+  next();
+});
 
 // Create GraphiQL application
 app.use("/graphiql", graphiqlExpress({ endpointURL: "/graphql" }));
@@ -45,8 +52,8 @@ app.use(
     schema,
     context: {
       Recipe,
-      User
-    }
+      User,
+    },
   })
 );
 
