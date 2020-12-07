@@ -22,6 +22,8 @@ exports.resolvers = {
         path: "favorites",
         model: "Recipe",
       });
+
+      return user;
     },
   },
   Mutation: {
